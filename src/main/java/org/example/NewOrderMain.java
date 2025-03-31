@@ -16,7 +16,7 @@ public class NewOrderMain {
 
         var producer = new KafkaProducer<String, String>(properties());
 
-        for (var i = 0; i < 100; i++){
+        for (var i = 0; i < 10; i++){
             var key = UUID.randomUUID().toString();
             var value =  key + "1234,100,1213213123123";
             var record = new ProducerRecord<>("ECOMMERCE_NEW_ORDER", key, value);
