@@ -9,6 +9,7 @@ import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.apache.kafka.common.serialization.StringSerializer;
 
+import java.io.IOException;
 import java.time.Duration;
 import java.util.Collection;
 import java.util.Collections;
@@ -16,12 +17,14 @@ import java.util.Properties;
 import java.util.UUID;
 
 public class FraudDetectorService {
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) throws InterruptedException, IOException {
         var fraudService = new FraudDetectorService();
-        var service = new KafkaService(FraudDetectorService.class.getSimpleName(),"ECOMMERCE_NEW_ORDER",
-                fraudService::parse);
-        service.run();
 
+        try(var service = new KafkaService(FraudDetectorService.class.getSimpleName(),"ECOMMERCE_NEW_ORDER",
+                fraudService::parse)){
+            service.run();
+
+        }
 
     }
 
